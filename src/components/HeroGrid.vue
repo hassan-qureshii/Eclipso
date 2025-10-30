@@ -18,13 +18,14 @@
       >
         <img
           :src="card.image"
-          alt="photo"
+          :alt="card.title"
           class="w-full h-[400px] md:h-[550px] object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
         />
 
-        <!-- Overlay (always visible on mobile) -->
+        <!-- Overlay -->
         <div
-          class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center opacity-100 md:opacity-0 group-hover:opacity-100 transition p-4"
+          class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-4"
         >
           <h2
             class="text-white text-xl md:text-2xl font-semibold mb-3 text-center animate-fadeInUp"
@@ -33,7 +34,7 @@
           </h2>
 
           <router-link
-            :to="`/gallery/${card.title}`"
+            :to="`/gallery/${card.title.toLowerCase()}`"
             class="border border-white text-white px-4 py-2 uppercase tracking-wider hover:bg-white hover:text-black transition mt-2"
           >
             More Photos
@@ -42,7 +43,7 @@
       </div>
     </div>
 
-    <!-- ✅ Navigation Buttons -->
+    <!-- Navigation Buttons -->
     <button
       @click="prevSlide"
       class="hidden md:flex absolute top-1/2 left-2 md:left-4 -translate-y-1/2 bg-black/40 text-white rounded-full p-2 md:p-3 hover:bg-black/70 transition"
@@ -63,31 +64,38 @@
         :key="i"
         @click="goToSlide(i)"
         class="w-3 h-3 rounded-full"
-        :class="
-          i === Math.floor(activeIndex / visibleCards)
-            ? 'bg-emerald-500'
-            : 'bg-gray-300'
-        "
+        :class="{
+          'bg-emerald-500': i === Math.floor(activeIndex / visibleCards),
+          'bg-gray-300': i !== Math.floor(activeIndex / visibleCards),
+        }"
       ></button>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/solid";
+
+// ✅ Proper image imports (Vercel safe)
+import nature from "@/assets/nature/nature.png";
+import portrait from "@/assets/portraits/portrait.png";
+import people from "@/assets/people/people.png";
+import animals from "@/assets/animals.png";
+import travel from "@/assets/travel/travel.png";
+import architecture from "@/assets/architecture/architecture.png";
 
 const activeIndex = ref(0);
 const visibleCards = 3;
 const isMobile = ref(false);
 
 const cards = [
-  { title: "Nature", image: "/src/assets/nature/nature.png" },
-  { title: "Portrait", image: "/src/assets/portraits/portrait.png" },
-  { title: "People", image: "/src/assets/people/people.png" },
-  { title: "Animals", image: "/src/assets/animals.png" },
-  { title: "Travel", image: "/src/assets/travel/travel.png" },
-  { title: "Architecture", image: "/src/assets/architecture/architecture.png" },
+  { title: "Nature", image: nature },
+  { title: "Portrait", image: portrait },
+  { title: "People", image: people },
+  { title: "Animals", image: animals },
+  { title: "Travel", image: travel },
+  { title: "Architecture", image: architecture },
 ];
 
 const totalSlides = computed(() => cards.length);
@@ -106,11 +114,16 @@ function goToSlide(index) {
   activeIndex.value = index * visibleCards;
 }
 
-// ✅ Detect mobile screen
+// ✅ Detect mobile screen (and clean up on unmount)
 onMounted(() => {
   const checkScreen = () => (isMobile.value = window.innerWidth <= 768);
   checkScreen();
   window.addEventListener("resize", checkScreen);
+
+  // Remove listener when component unmounts
+  onBeforeUnmount(() => {
+    window.removeEventListener("resize", checkScreen);
+  });
 });
 </script>
 
