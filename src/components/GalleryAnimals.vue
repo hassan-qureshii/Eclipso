@@ -13,16 +13,17 @@
       <div
         v-for="(image, index) in images"
         :key="index"
-        class="break-inside-avoid overflow-hidden rounded-xl shadow-lg hover:scale-[1.03] transform transition duration-500 cursor-pointer group"
+        class="relative break-inside-avoid overflow-hidden rounded-xl shadow-lg hover:scale-[1.02] transform transition-transform duration-300 cursor-pointer group will-change-transform"
         @click="openModal(image)"
       >
         <img
           :src="image.url"
           :alt="image.title"
-          class="w-full h-auto object-cover rounded-xl group-hover:opacity-80 transition"
+          class="w-full h-auto object-cover rounded-xl group-hover:opacity-80 transition-opacity duration-300 will-change-opacity"
+          loading="lazy"
         />
         <div
-          class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex flex-col justify-center items-center text-white text-center p-4"
+          class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-white text-center p-4"
         >
           <h2 class="text-lg font-semibold">{{ image.title }}</h2>
           <p class="text-sm">{{ image.description }}</p>
@@ -84,7 +85,6 @@ const images = ref([
   { url: animal10, title: 'Mighty Eagle', description: 'An eagle soaring high with wings wide open.' },
   { url: animal11, title: 'Friendly Dog', description: 'A loyal companion waiting for playtime.' },
   { url: animal12, title: 'Panda Eating Bamboo', description: 'A peaceful panda enjoying its meal.' },
-  // 🆕 Added one more animal
   { url: animal13, title: 'Golden Tiger', description: 'A rare golden tiger resting in the shade of the jungle.' }
 ])
 
@@ -109,8 +109,14 @@ const closeModal = () => {
   opacity: 0;
 }
 
-/* Masonry layout fix for Chrome/Safari */
+/* Masonry layout fix */
 .break-inside-avoid {
   break-inside: avoid;
+}
+
+/* Fix layout shifting on hover */
+.group {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 </style>
