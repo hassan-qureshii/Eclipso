@@ -82,12 +82,12 @@ const visibleCards = 3;
 const isMobile = ref(false);
 
 const cards = [
-  { title: "Nature", image: "/src/assets/nature.jpg" },
-  { title: "Portrait", image: "/src/assets/portrait.jpg" },
-  { title: "People", image: "/src/assets/people.jpg" },
-  { title: "Animals", image: "/src/assets/animals.jpg" },
-  { title: "Travel", image: "/src/assets/travel.jpg" },
-  { title: "Architecture", image: "/src/assets/architecture.jpg" },
+  { title: "Nature", image: "/src/assets/nature/nature.png" },
+  { title: "Portrait", image: "/src/assets/portraits/portrait.png" },
+  { title: "People", image: "/src/assets/people/people.png" },
+  { title: "Animals", image: "/src/assets/animals.png" },
+  { title: "Travel", image: "/src/assets/travel/travel.png" },
+  { title: "Architecture", image: "/src/assets/architecture/architecture.png" },
 ];
 
 const totalSlides = computed(() => cards.length);

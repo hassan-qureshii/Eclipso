@@ -77,7 +77,7 @@ import Footer from "../components/Footer.vue";
 import { TwitterIcon, FacebookIcon, InstagramIcon } from "lucide-vue-next";
 
 // Import images
-import missionImage from "../assets/portrait.jpg";
+import missionImage from "../assets/portraits/portrait.png";
 import jeanImage from "../assets/jean.jpg";
 import claireImage from "../assets/claire.jpg";
 import johnImage from "../assets/john.jpg";
