@@ -4,7 +4,11 @@
     <div
       ref="carousel"
       class="flex transition-transform duration-700 ease-in-out gap-6 md:flex-row flex-col md:gap-6"
-      :style="{ transform: isMobile ? 'none' : `translateX(-${activeIndex * (100 / visibleCards)}%)` }"
+      :style="{
+        transform: isMobile
+          ? 'none'
+          : `translateX(-${activeIndex * (100 / visibleCards)}%)`,
+      }"
     >
       <!-- Each Slide -->
       <div
@@ -22,7 +26,9 @@
         <div
           class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center opacity-100 md:opacity-0 group-hover:opacity-100 transition p-4"
         >
-          <h2 class="text-white text-xl md:text-2xl font-semibold mb-3 text-center animate-fadeInUp">
+          <h2
+            class="text-white text-xl md:text-2xl font-semibold mb-3 text-center animate-fadeInUp"
+          >
             {{ card.title }}
           </h2>
 
@@ -57,51 +63,55 @@
         :key="i"
         @click="goToSlide(i)"
         class="w-3 h-3 rounded-full"
-        :class="i === Math.floor(activeIndex / visibleCards) ? 'bg-emerald-500' : 'bg-gray-300'"
+        :class="
+          i === Math.floor(activeIndex / visibleCards)
+            ? 'bg-emerald-500'
+            : 'bg-gray-300'
+        "
       ></button>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
+import { ref, computed, onMounted } from "vue";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/solid";
 
-const activeIndex = ref(0)
-const visibleCards = 3
-const isMobile = ref(false)
+const activeIndex = ref(0);
+const visibleCards = 3;
+const isMobile = ref(false);
 
 const cards = [
-  { title: 'Nature', image: '/src/assets/nature/nature.jpg' },
-  { title: 'Portrait', image: '/src/assets/portraits/portrait.jpg' },
-  { title: 'People', image: '/src/assets/people/people.jpg' },
-  { title: 'Animals', image: '/src/assets/animals/animals.jpg' },
-  { title: 'Travel', image: '/src/assets/travel/travel.jpg' },
-  { title: 'Architecture', image: '/src/assets/architecture/architecture.jpg' },
-]
+  { title: "Nature", image: "/src/assets/nature.jpg" },
+  { title: "Portrait", image: "/src/assets/portrait.jpg" },
+  { title: "People", image: "/src/assets/people.jpg" },
+  { title: "Animals", image: "/src/assets/animals.jpg" },
+  { title: "Travel", image: "/src/assets/travel.jpg" },
+  { title: "Architecture", image: "/src/assets/architecture.jpg" },
+];
 
-const totalSlides = computed(() => cards.length)
+const totalSlides = computed(() => cards.length);
 
 function nextSlide() {
-  if (activeIndex.value < totalSlides.value - visibleCards) activeIndex.value++
-  else activeIndex.value = 0
+  if (activeIndex.value < totalSlides.value - visibleCards) activeIndex.value++;
+  else activeIndex.value = 0;
 }
 
 function prevSlide() {
-  if (activeIndex.value > 0) activeIndex.value--
-  else activeIndex.value = totalSlides.value - visibleCards
+  if (activeIndex.value > 0) activeIndex.value--;
+  else activeIndex.value = totalSlides.value - visibleCards;
 }
 
 function goToSlide(index) {
-  activeIndex.value = index * visibleCards
+  activeIndex.value = index * visibleCards;
 }
 
 // ✅ Detect mobile screen
 onMounted(() => {
-  const checkScreen = () => (isMobile.value = window.innerWidth <= 768)
-  checkScreen()
-  window.addEventListener('resize', checkScreen)
-})
+  const checkScreen = () => (isMobile.value = window.innerWidth <= 768);
+  checkScreen();
+  window.addEventListener("resize", checkScreen);
+});
 </script>
 
 <style scoped>
