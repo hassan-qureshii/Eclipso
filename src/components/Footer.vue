@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-center py-6 text-lg text-gray-600 custom-font">
+  <footer class="text-center py-6 text-lg text-gray-600 custom-font m-5">
     ©2025 Crafted with 💚 and creativity by 
     <a
       href="https://github.com/hassan-qureshii?tab=repositories"

@@ -1,5 +1,5 @@
 <template>
-  <header class="flex justify-between items-center px-8 pb-4 pt-8 font-poppins relative">
+  <header class="flex justify-between items-center px-8 pb-2 pt-4 md:pb-4 md:pt-8 font-poppins relative">
     <!-- Logo -->
     <h1 class="text-3xl font-semibold text-emerald-600">
       <router-link to="/">Eclipso</router-link>
