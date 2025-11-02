@@ -1,5 +1,4 @@
 <template>
-  <!-- The router-view handles which page to show -->
   <router-view />
 </template>
 
